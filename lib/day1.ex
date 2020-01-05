@@ -16,7 +16,7 @@ defmodule Aoc2019.Day1 do
   @doc """
   Calculates total fuel requirement.
   """
-  @spec total_fuel(input_stream :: String.t()) :: integer
+  @spec total_fuel(input_stream :: File.Stream.t()) :: integer
   def total_fuel(input_stream) do
     input_stream
     |> Stream.map(fn line ->
@@ -29,7 +29,7 @@ defmodule Aoc2019.Day1 do
   @doc """
   Calculates total fuel required, counting fuel, needed for the fuel itself.
   """
-  @spec total_fuel_fixed(mass :: pos_integer) :: pos_integer
+  @spec total_fuel_fixed(input_stream :: File.Stream.t()) :: pos_integer
   def total_fuel_fixed(input_stream) do
     input_stream
     |> Stream.map(fn line ->

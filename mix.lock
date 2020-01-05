@@ -1,0 +1,4 @@
+%{
+  "dialyxir": {:hex, :dialyxir, "0.5.1", "b331b091720fd93e878137add264bac4f644e1ddae07a70bf7062c7862c4b952", [:mix], [], "hexpm"},
+  "dialyzex": {:hex, :dialyzex, "1.2.1", "6a4f28f755882aba7b9aa53f874f636f1aa764d8b0424d74e22827a842a06f94", [:mix], [], "hexpm"},
+}
