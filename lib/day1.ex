@@ -1,13 +1,13 @@
 defmodule Aoc2019.Day1 do
   @moduledoc false
 
-  @spec required_fuel(mass :: pos_integer) :: integer
-  defp required_fuel(mass), do: div(mass, 3) - 2
+  @spec fuel_per_mass(mass :: pos_integer) :: integer
+  defp fuel_per_mass(mass), do: div(mass, 3) - 2
 
-  @spec required_fuel_fixed(mass :: pos_integer, fuel :: integer) :: integer
-  defp required_fuel_fixed(mass, fuel \\ 0) do
-    case required_fuel(mass) do
-      required when required >=0 -> required_fuel_fixed(required, fuel + required)
+  @spec fuel_per_mass_fixed(mass :: pos_integer, fuel :: integer) :: integer
+  defp fuel_per_mass_fixed(mass, fuel \\ 0) do
+    case fuel_per_mass(mass) do
+      required when required >=0 -> fuel_per_mass_fixed(required, fuel + required)
       _ -> fuel
     end
   end
@@ -21,7 +21,7 @@ defmodule Aoc2019.Day1 do
     input_stream
     |> Stream.map(fn line ->
       {mass, _rest} = Integer.parse(line)
-      required_fuel(mass)
+      fuel_per_mass(mass)
     end)
     |> Enum.sum()
   end
@@ -34,7 +34,7 @@ defmodule Aoc2019.Day1 do
     input_stream
     |> Stream.map(fn line ->
       {mass, _rest} = Integer.parse(line)
-      required_fuel_fixed(mass)
+      fuel_per_mass_fixed(mass)
     end)
     |> Enum.sum()
   end
