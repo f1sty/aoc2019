@@ -1,10 +1,10 @@
 defmodule Aoc2019.Day1 do
   @moduledoc false
 
-  @spec fuel_per_mass(mass :: pos_integer) :: integer
+  @spec fuel_per_mass(mass :: integer) :: integer
   defp fuel_per_mass(mass), do: div(mass, 3) - 2
 
-  @spec fuel_per_mass_fixed(mass :: pos_integer, fuel :: integer) :: integer
+  @spec fuel_per_mass_fixed(mass :: integer, fuel :: integer) :: integer
   defp fuel_per_mass_fixed(mass, fuel \\ 0) do
     case fuel_per_mass(mass) do
       required when required >=0 -> fuel_per_mass_fixed(required, fuel + required)
