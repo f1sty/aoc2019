@@ -26,8 +26,7 @@ defmodule Aoc2019.Day2 do
     state = :ets.new(:state, [:ordered_set])
     program
     |> Stream.with_index()
-    |> Stream.map(fn {value, key} -> {key, value} end)
-    |> Enum.each(fn item -> :ets.insert(state, item) end)
+    |> Enum.each(fn {value, key} -> :ets.insert(state, {key, value}) end)
 
     state
   end
