@@ -85,7 +85,7 @@ defmodule Aoc2019.Day2 do
     {arg1, arg2, out, ip}
   end
 
-  @spec put_arguments(parogram :: opcode_list(), noun :: non_neg_integer, verb :: non_neg_integer) ::
+  @spec put_arguments(program :: opcode_list(), noun :: non_neg_integer, verb :: non_neg_integer) ::
           opcode_list()
   defp put_arguments([op1, _, _ | program], noun, verb) do
     [op1, noun, verb | program]
