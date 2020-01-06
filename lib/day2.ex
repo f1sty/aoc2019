@@ -11,7 +11,7 @@ defmodule Aoc2019.Day2 do
 
     state =
       program
-      |> patch(12, 2)
+      |> put_arguments(12, 2)
       |> populate_state(state)
 
     execute(state, 0) |> hd()
@@ -26,7 +26,7 @@ defmodule Aoc2019.Day2 do
           verb <- 0..99 do
         state =
           program
-          |> patch(noun, verb)
+          |> put_arguments(noun, verb)
           |> populate_state(state)
 
         {noun, verb, execute(state, 0) |> hd()}
@@ -85,9 +85,9 @@ defmodule Aoc2019.Day2 do
     {arg1, arg2, out, ip}
   end
 
-  @spec patch(parogram :: opcode_list(), noun :: non_neg_integer, verb :: non_neg_integer) ::
+  @spec put_arguments(parogram :: opcode_list(), noun :: non_neg_integer, verb :: non_neg_integer) ::
           opcode_list()
-  defp patch([op1, _, _ | program], noun, verb) do
+  defp put_arguments([op1, _, _ | program], noun, verb) do
     [op1, noun, verb | program]
   end
 end
