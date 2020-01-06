@@ -3,27 +3,48 @@ defmodule Aoc2019.Day2 do
 
   @type opcode_list :: [integer]
 
-  @doc """
-  Executes part 1.
-  """
+  @output 19_690_720
+
   @spec part_one(program :: opcode_list()) :: integer
   def part_one(program) do
+    state = :ets.new(:state, [:ordered_set])
+
     state =
       program
-      |> patch()
-      |> populate_state()
+      |> patch(12, 2)
+      |> populate_state(state)
+
     execute(state, 0) |> hd()
+  end
+
+  @spec part_two(program :: opcode_list()) :: integer
+  def part_two(program) do
+    state = :ets.new(:state, [:ordered_set])
+
+    {noun, verb, _output} =
+      for noun <- 0..99,
+          verb <- 0..99 do
+        state =
+          program
+          |> patch(noun, verb)
+          |> populate_state(state)
+
+        {noun, verb, execute(state, 0) |> hd()}
+      end
+      |> Enum.find(fn {_, _, output} -> output == @output end)
+
+    100 * noun + verb
   end
 
   @spec execute(program :: opcode_list()) :: opcode_list()
   def execute(program) do
-    state = populate_state(program)
+    state = :ets.new(:state, [:ordered_set])
+    state = populate_state(program, state)
     execute(state, 0)
   end
 
-  @spec populate_state(program :: opcode_list) :: :ets.tid()
-  defp populate_state(program) do
-    state = :ets.new(:state, [:ordered_set])
+  @spec populate_state(program :: opcode_list(), state :: :ets.tid()) :: :ets.tid()
+  defp populate_state(program, state) do
     program
     |> Stream.with_index()
     |> Enum.each(fn {value, key} -> :ets.insert(state, {key, value}) end)
@@ -31,7 +52,8 @@ defmodule Aoc2019.Day2 do
     state
   end
 
-  @spec execute(state :: :ets.tid(), ip :: non_neg_integer) :: opcode_list() | {:error, reason :: term}
+  @spec execute(state :: :ets.tid(), ip :: non_neg_integer) ::
+          opcode_list() | {:error, reason :: term}
   defp execute(state, ip) do
     case :ets.lookup_element(state, ip, 2) do
       1 ->
@@ -44,9 +66,11 @@ defmodule Aoc2019.Day2 do
         :ets.insert(state, {out, arg1 * arg2})
         execute(state, ip)
 
-      99 -> :ets.select(state, [{{:"$1", :"$2"}, [], [:"$2"]}])
+      99 ->
+        :ets.select(state, [{{:"$1", :"$2"}, [], [:"$2"]}])
 
-      _ -> {:error, :bad_opcode}
+      _ ->
+        {:error, :bad_opcode}
     end
   end
 
@@ -61,10 +85,9 @@ defmodule Aoc2019.Day2 do
     {arg1, arg2, out, ip}
   end
 
-  @spec patch(state :: list) :: list
-  defp patch(program) do
-    program
-    |> List.replace_at(1, 12)
-    |> List.replace_at(2, 2)
+  @spec patch(parogram :: opcode_list(), noun :: non_neg_integer, verb :: non_neg_integer) ::
+          opcode_list()
+  defp patch([op1, _, _ | program], noun, verb) do
+    [op1, noun, verb | program]
   end
 end

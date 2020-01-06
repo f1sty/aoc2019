@@ -3,7 +3,8 @@ defmodule Aoc2019.Day1Test do
   doctest Aoc2019.Day1
 
   setup do
-    {:ok, input} = StringIO.open("""
+    {:ok, input} =
+      StringIO.open("""
       12
       14
       1969
@@ -23,11 +24,11 @@ defmodule Aoc2019.Day1Test do
 
   test "part_one" do
     file_path = "lib/day1/input.txt"
-    assert Aoc2019.Day1.part_one(file_path) == 3443395
+    assert Aoc2019.Day1.part_one(file_path) == 3_443_395
   end
 
   test "part_two" do
     file_path = "lib/day1/input.txt"
-    assert Aoc2019.Day1.part_two(file_path) == 5162216
+    assert Aoc2019.Day1.part_two(file_path) == 5_162_216
   end
 end

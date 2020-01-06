@@ -7,11 +7,10 @@ defmodule Aoc2019.Day1 do
   @spec fuel_per_mass_fixed(mass :: integer, fuel :: integer) :: integer
   defp fuel_per_mass_fixed(mass, fuel \\ 0) do
     case fuel_per_mass(mass) do
-      required when required >=0 -> fuel_per_mass_fixed(required, fuel + required)
+      required when required >= 0 -> fuel_per_mass_fixed(required, fuel + required)
       _ -> fuel
     end
   end
-
 
   @doc """
   Calculates total fuel requirement.
