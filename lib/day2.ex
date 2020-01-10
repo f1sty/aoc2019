@@ -9,12 +9,10 @@ defmodule Aoc2019.Day2 do
   def part_one(program) do
     state = :ets.new(:state, [:ordered_set])
 
-    state =
-      program
-      |> put_arguments(12, 2)
-      |> populate_state(state)
-
-    execute(state, 0) |> hd()
+    program
+    |> put_arguments(12, 2)
+    |> populate_state(state)
+    |> execute_and_get_output()
   end
 
   @spec part_two(program :: opcode_list()) :: integer
@@ -29,7 +27,7 @@ defmodule Aoc2019.Day2 do
           |> put_arguments(noun, verb)
           |> populate_state(state)
 
-        {noun, verb, execute(state, 0) |> hd()}
+        {noun, verb, execute_and_get_output(state)}
       end
       |> Enum.find(fn {_, _, output} -> output == @output end)
 
@@ -51,6 +49,9 @@ defmodule Aoc2019.Day2 do
 
     state
   end
+
+  @spec execute_and_get_output(state :: :ets.tab()) :: integer
+  defp execute_and_get_output(state), do: execute(state, 0) |> hd()
 
   @spec execute(state :: :ets.tid(), ip :: non_neg_integer) ::
           opcode_list() | {:error, reason :: term}
